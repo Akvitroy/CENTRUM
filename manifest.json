@@ -1,0 +1,17 @@
+{
+  "name": "Centrum Database",
+  "short_name": "Centrum",
+  "description": "Internal database verification tool for Akvitroy",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://akvitroy.com/images/p101.jpg", 
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
