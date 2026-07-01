@@ -9,7 +9,7 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "https://akvitroy.com/images/p101.jpg", 
+      "src": "https://github.com/Akvitroy/CENTRUM/blob/main/launchericon-512x512.png", 
       "sizes": "512x512",
       "type": "image/jpeg"
     }
