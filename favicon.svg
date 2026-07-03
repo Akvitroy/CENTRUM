@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Transparent background container with black strokes -->
+  <g fill="none" stroke="#121212" stroke-linecap="round" stroke-linejoin="round">
+    
+    <!-- Outer Main Circle -->
+    <circle cx="270" cy="242" r="192" stroke-width="16" />
+    
+    <!-- Top Stylized Sharp Flight Wing / Pointer -->
+    <path d="M 24,286 
+             L 482,90 
+             L 378,132 
+             L 96,270 
+             Z" 
+          fill="#121212" stroke-width="4" />
+          
+    <!-- Bottom Intersecting Stylized Sharp Wing -->
+    <path d="M 238,234 
+             L 438,124 
+             L 174,420 
+             L 254,286 
+             Z" 
+          fill="#121212" stroke-width="4" />
+          
+  </g>
+</svg>
