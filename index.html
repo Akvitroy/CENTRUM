@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C E N T R U M - Database</title>
+    
+    <!-- PWA & Icon Config -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2026">
+    <link rel="apple-touch-icon" href="favicon.svg?v=2026">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px 20px;
+            transition: background-color 0.1s, color 0.1s;
+        }
+
+        body.product-mode {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            color: #ffffff;
+        }
+
+        body.product-mode .logo {
+            color: #000000;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar {
+            width: 350px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #ffffff;
+            color: #000000;
+            font-family: inherit;
+            font-size: 16px;
+            outline: none;
+            border: 1px solid transparent;
+        }
+
+        body.product-mode .search-bar {
+            border: 1px solid #000000;
+        }
+
+        .search-btn {
+            background: none;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            padding: 12px 24px;
+            margin-left: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        body.product-mode .search-btn {
+            border: 1px solid #000000;
+            color: #000000;
+        }
+
+        .search-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        body.product-mode .search-btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 0;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .home-content {
+            width: 100%;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        body.product-mode .home-content {
+            display: none;
+        }
+
+        .team-greeting {
+            text-align: left;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .team-message {
+            text-align: justify;
+            font-size: 15px;
+            line-height: 1.8;
+            color: #cccccc;
+            letter-spacing: 0.3px;
+        }
+
+        .error-message {
+            color: #ff4a4a;
+            font-size: 14px;
+            margin-top: 30px;
+            min-height: 20px;
+            text-align: center;
+        }
+
+        #productView {
+            display: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .back-nav {
+            margin-bottom: 40px;
+        }
+
+        .back-nav button {
+            background: none;
+            border: none;
+            color: #666666;
+            font-size: 14px;
+            letter-spacing: 1px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .back-nav button:hover {
+            color: #000000;
+        }
+
+        #productView h1 {
+            font-size: 32px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .product-subtitle {
+            font-size: 16px;
+            font-weight: 400;
+            color: #666666;
+            letter-spacing: 0.5px;
+            margin-bottom: 30px;
+        }
+
+        .product-details {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #111111;
+        }
+
+        footer {
+            width: 100%;
+            max-width: 1200px;
+            margin: 40px auto 0 auto;
+        }
+
+        /* ADMIN BAR STYLING */
+        #admin-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: inherit;
+            font-size: 13px;
+            margin-bottom: 15px;
+            padding: 8px 0;
+            color: #888888;
+            width: 100%;
+        }
+
+        body.product-mode #admin-bar {
+            color: #555555;
+        }
+
+        #admin-bar button {
+            background: none;
+            color: inherit;
+            border: 1px solid currentColor;
+            padding: 6px 14px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        #admin-bar button:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        body.product-mode #admin-bar button:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        #admin-bar button.save-btn { border-color: #00e676; color: #00e676; margin-left: 8px; }
+        #admin-bar button.product-btn { border-color: #0070f3; color: #0070f3; margin-left: 8px; }
+        #admin-bar button.logout-btn { border-color: #ff5252; color: #ff5252; margin-left: 8px; }
+
+        .editing-active [contenteditable="true"] {
+            outline: 2px dashed #0070f3;
+            outline-offset: 4px;
+            background-color: rgba(0, 112, 243, 0.08);
+        }
+
+        #productModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 10000;
+            padding: 30px;
+            color: #fff;
+            font-family: sans-serif;
+            overflow-y: auto;
+        }
+
+        #productModal textarea {
+            width: 100%;
+            height: 350px;
+            background: #111;
+            color: #00e676;
+            border: 1px solid #333;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 13px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .modal-actions button {
+            padding: 8px 18px;
+            border-radius: 4px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-save { background: #00e676; color: #000; }
+        .modal-close { background: #444; color: #fff; }
+
+        .footer-line {
+            border: 0;
+            height: 1px;
+            background: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        body.product-mode .footer-line {
+            background: #000000;
+        }
+
+        .footer-text {
+            text-align: right;
+            font-size: 12px;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        body.product-mode .footer-text {
+            color: #000000;
+        }
+
+        @media (max-width: 768px) {
+            .search-bar { width: 250px; }
+            main { padding: 40px 0; }
+        }
+
+        @media (max-width: 580px) {
+            body { padding: 25px 15px; }
+            header { flex-direction: column; gap: 20px; align-items: flex-start; }
+            .search-container { width: 100%; }
+            .search-bar { width: 100%; }
+            .team-greeting { font-size: 16px; }
+            .team-message { font-size: 14px; text-align: left; }
+            #productView h1 { font-size: 26px; }
+            .product-subtitle { font-size: 14px; margin-bottom: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="headerPanel">
+        <div class="logo editable">C E N T R U M</div>
+        <div class="search-container">
+            <input type="text" id="productSearch" class="search-bar" placeholder="Enter product code..." autocomplete="off">
+            <button class="search-btn" onclick="executeSearch()">Search</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="home-content">
+            <div class="team-greeting editable">Dear Akvitroy Team,</div>
+            <div class="team-message editable">
+                True craftsmanship is the silent heartbeat of Akvitroy. Every cut, every stitch, and every refined line is an intentional reflection of our identity—blending structural strength with artistic form. Craftsmanship isn’t just about execution; it is the physical translation of our values, ensuring that what we build carries a sense of permanence and meticulous care. By committing to this standard, we don't just manufacture items; we elevate our brand, transforming standard products into meaningful milestones of deliberate design. Our dedication here shapes how the world perceives Akvitroy.
+            </div>
+        </div>
+
+        <div id="errorLog" class="error-message"></div>
+
+        <div id="productView">
+            <div class="back-nav">
+                <button onclick="returnToHome()">← BACK TO C E N T R U M</button>
+            </div>
+            <h1 id="viewTitle" class="editable">Product Code:</h1>
+            <div id="viewSubtitle" class="product-subtitle editable"></div>
+            <div id="viewContent" class="product-details editable"></div>
+        </div>
+    </main>
+
+    <footer>
+        <!-- ADMIN BAR (Placed right before the footer line) -->
+        <div id="admin-bar">
+          <span id="admin-status">🔒 CENTRUM Admin</span>
+          <div>
+            <button id="login-btn" onclick="login()">Admin Login</button>
+            <button id="prod-btn" class="product-btn" onclick="openProductEditor()" style="display: none;">Edit Products</button>
+            <button id="save-btn" class="save-btn" onclick="saveToGitHub()" style="display: none;">Publish Page</button>
+            <button id="logout-btn" class="logout-btn" onclick="logout()" style="display: none;">Logout</button>
+          </div>
+        </div>
+
+        <hr class="footer-line">
+        <div class="footer-text editable">&copy; Akvitroy, 2026. All Rights Reserved.</div>
+    </footer>
+
+    <!-- PRODUCT EDITOR MODAL -->
+    <div id="productModal">
+        <h3>CENTRUM — Product Database Editor</h3>
+        <p style="font-size: 12px; color: #aaa; margin-top: 5px;">Edit product entries in JSON format below:</p>
+        <textarea id="jsonInput"></textarea>
+        <div class="modal-actions">
+            <button class="modal-close" onclick="closeProductEditor()">Cancel</button>
+            <button class="modal-save" onclick="saveProductsToGitHub()">Save & Publish Products</button>
+        </div>
+    </div>
+
+    <script>
+        let database = {
+            "p101": {
+                title: "Product Code: P101",
+                subtitle: "Nature Theme Collection — Akvi Troy Cloudline Short",
+                html: `<div style="margin-bottom: 25px;">
+                           <img src="https://akvitroy.com/images/p101.jpg" alt="P101 Garment View" style="max-width: 100%; height: auto; border-radius: 4px;">
+                       </div>
+                       <p><strong>Fit Type:</strong> Tight Fit</p>
+                       <p><strong>Category:</strong> Sports & Streetwear</p>`
+            },
+            "p102": {
+                title: "Product Code: P102",
+                subtitle: "Nature Theme Collection — Lounge Utility",
+                html: `<p><strong>Fit Type:</strong> High Cut Lounge Fit</p>
+                       <p><strong>Category:</strong> Streetwear</p>`
+            },
+            "p103": {
+                title: "Product Code: P103",
+                subtitle: "Cloudline Series — Technical Prototype",
+                html: `<p><strong>Fit Type:</strong> Compressed Sports Fit</p>
+                       <p><strong>Status:</strong> Prototype Production</p>`
+            }
+        };
+
+        async function fetchProducts() {
+            try {
+                const res = await fetch('products.json');
+                if (res.ok) {
+                    database = await res.json();
+                }
+            } catch (e) {
+                console.log('Using built-in product matrix.');
+            }
+        }
+        fetchProducts();
+
+        function executeSearch() {
+            const searchInput = document.getElementById('productSearch').value.trim().toLowerCase();
+            const errorLog = document.getElementById('errorLog');
+            const productView = document.getElementById('productView');
+
+            if (searchInput === "") {
+                errorLog.textContent = "Please enter a product code.";
+                return;
+            }
+
+            if (database[searchInput]) {
+                errorLog.textContent = ""; 
+                document.getElementById('viewTitle').textContent = database[searchInput].title;
+                document.getElementById('viewSubtitle').textContent = database[searchInput].subtitle || "";
+                document.getElementById('viewContent').innerHTML = database[searchInput].html;
+                
+                document.body.classList.add('product-mode');
+                productView.style.display = "block";
+            } else {
+                errorLog.textContent = `Product code "${searchInput}" not found in database.`;
+                returnToHome();
+            }
+        }
+
+        function returnToHome() {
+            document.body.classList.remove('product-mode');
+            document.getElementById('productView').style.display = "none";
+            document.getElementById('productSearch').value = "";
+        }
+
+        document.getElementById('productSearch').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') { executeSearch(); }
+        });
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(err => {});
+            });
+        }
+
+        const REPO_OWNER = 'akvitroy';
+        const REPO_NAME = 'CENTRUM';
+        const FILE_PATH = 'index.html';
+        const PROD_PATH = 'products.json';
+        const BRANCH = 'main'; 
+
+        let githubToken = sessionStorage.getItem('gh_admin_token') || '';
+
+        if (githubToken) { enableEditMode(); }
+
+        function login() {
+            const token = prompt("Enter your Secret Token:");
+            if (!token) return;
+            githubToken = token.trim();
+            sessionStorage.setItem('gh_admin_token', githubToken);
+            enableEditMode();
+        }
+
+        function logout() {
+            sessionStorage.removeItem('gh_admin_token');
+            githubToken = '';
+            disableEditMode();
+            alert("Logged out.");
+        }
+
+        function enableEditMode() {
+            document.body.classList.add('editing-active');
+            document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
+            
+            document.getElementById('admin-status').textContent = '🔓 Admin Active';
+            document.getElementById('login-btn').style.display = 'none';
+            document.getElementById('prod-btn').style.display = 'inline-block';
+            document.getElementById('save-btn').style.display = 'inline-block';
+            document.getElementById('logout-btn').style.display = 'inline-block';
+        }
+
+        function disableEditMode() {
+            document.body.classList.remove('editing-active');
+            document.querySelectorAll('.editable').forEach(el => el.removeAttribute('contenteditable'));
+            
+            document.getElementById('admin-status').textContent = '🔒 CENTRUM Admin';
+            document.getElementById('login-btn').style.display = 'inline-block';
+            document.getElementById('prod-btn').style.display = 'none';
+            document.getElementById('save-btn').style.display = 'none';
+            document.getElementById('logout-btn').style.display = 'none';
+        }
+
+        function openProductEditor() {
+            document.getElementById('jsonInput').value = JSON.stringify(database, null, 2);
+            document.getElementById('productModal').style.display = 'block';
+        }
+
+        function closeProductEditor() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        async function saveProductsToGitHub() {
+            const text = document.getElementById('jsonInput').value;
+            try {
+                const parsed = JSON.parse(text);
+                database = parsed;
+            } catch (err) {
+                alert("Invalid JSON format. Check comma and bracket placements.");
+                return;
+            }
+
+            try {
+                let sha = '';
+                const getUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${PROD_PATH}?ref=${BRANCH}`;
+                const getRes = await fetch(getUrl, { headers: { 'Authorization': `Bearer ${githubToken}` } });
+                
+                if (getRes.ok) {
+                    const fileData = await getRes.json();
+                    sha = fileData.sha;
+                }
+
+                const encodedContent = btoa(unescape(encodeURIComponent(JSON.stringify(database, null, 2))));
+                const putUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${PROD_PATH}`;
+                
+                const bodyData = {
+                    message: 'Update products database',
+                    content: encodedContent,
+                    branch: BRANCH
+                };
+                if (sha) bodyData.sha = sha;
+
+                const putRes = await fetch(putUrl, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `Bearer ${githubToken}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify(bodyData)
+                });
+
+                if (putRes.ok) {
+                    alert("Products saved and published!");
+                    closeProductEditor();
+                } else {
+                    throw new Error("Failed to save products.");
+                }
+            } catch (err) {
+                alert("Error: " + err.message);
+            }
+        }
+
+        async function saveToGitHub() {
+            if (!githubToken) return;
+
+            const saveBtn = document.getElementById('save-btn');
+            saveBtn.textContent = 'Publishing...';
+            saveBtn.disabled = true;
+
+            try {
+                const getUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?ref=${BRANCH}`;
+                const getResponse = await fetch(getUrl, {
+                    headers: { 'Authorization': `Bearer ${githubToken}` }
+                });
+
+                if (!getResponse.ok) throw new Error("Invalid Token or permissions.");
+
+                const fileData = await getResponse.json();
+                const currentSha = fileData.sha;
+
+                disableEditMode();
+                
+                const rawHtml = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+                const encodedContent = btoa(unescape(encodeURIComponent(rawHtml)));
+
+                const putUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`;
+                const putResponse = await fetch(putUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${githubToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: 'Update content via CENTRUM admin panel',
+                        content: encodedContent,
+                        sha: currentSha,
+                        branch: BRANCH
+                    })
+                });
+
+                if (putResponse.ok) {
+                    alert("Success! Live changes published.");
+                    enableEditMode();
+                } else {
+                    const err = await putResponse.json();
+                    throw new Error(err.message || 'Failed to update.');
+                }
+
+            } catch (error) {
+                alert("Error: " + error.message);
+                enableEditMode();
+            } finally {
+                saveBtn.textContent = 'Publish Page';
+                saveBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
