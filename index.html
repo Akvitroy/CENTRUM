@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C E N T R U M - Database</title>
@@ -225,7 +224,7 @@
         }
     </style>
 </head>
-<body>
+<body class="">
 
     <header id="headerPanel">
         <div class="logo editable">C E N T R U M</div>
@@ -245,13 +244,13 @@
 
         <div id="errorLog" class="error-message"></div>
 
-        <div id="productView">
+        <div id="productView" style="display: none;">
             <div class="back-nav">
                 <button onclick="returnToHome()">← BACK TO C E N T R U M</button>
             </div>
-            <h1 id="viewTitle" class="editable">Product Code:</h1>
-            <div id="viewSubtitle" class="product-subtitle editable"></div>
-            <div id="viewContent" class="product-details editable"></div>
+            <h1 id="viewTitle" class="editable">Testing one</h1>
+            <div id="viewSubtitle" class="product-subtitle editable">Test 1</div>
+            <div id="viewContent" class="product-details editable">Testing for products on centrum&nbsp;</div>
         </div>
     </main>
 
@@ -259,19 +258,19 @@
         <div id="admin-bar">
           <span id="admin-status">🔒 CENTRUM Admin</span>
           <div>
-            <button id="login-btn" onclick="login()">Admin Login</button>
+            <button id="login-btn" onclick="login()" style="display: inline-block;">Admin Login</button>
             <button id="prod-btn" class="product-btn" onclick="openProductEditor()" style="display: none;">Edit Products</button>
-            <button id="save-btn" class="save-btn" onclick="saveToGitHub()" style="display: none;">Publish Page</button>
+            <button id="save-btn" class="save-btn" onclick="saveToGitHub()" style="display: none;" disabled="">Publishing...</button>
             <button id="logout-btn" class="logout-btn" onclick="logout()" style="display: none;">Logout</button>
           </div>
         </div>
 
         <hr class="footer-line">
-        <div class="footer-text editable">&copy; Akvitroy, 2026. All Rights Reserved.</div>
+        <div class="footer-text editable">© Akvitroy, 2026. All Rights Reserved.</div>
     </footer>
 
     <!-- PRODUCT EDITOR MODAL -->
-    <div id="productModal">
+    <div id="productModal" style="display: none;">
         <div class="modal-content">
             <h3>CENTRUM — Manage Products</h3>
             
@@ -289,18 +288,27 @@
             </div>
             <div class="form-group">
                 <label>Details / HTML Content</label>
-                <textarea id="formHtml" placeholder="e.g. <p><strong>Fit Type:</strong> Regular</p>"></textarea>
+                <textarea id="formHtml" placeholder="e.g. &lt;p&gt;&lt;strong&gt;Fit Type:&lt;/strong&gt; Regular&lt;/p&gt;"></textarea>
             </div>
             <button class="add-btn" onclick="addOrUpdateProductForm()">Add / Update Product Item</button>
 
             <div class="prod-list">
                 <h4 style="font-size: 13px; color: #aaa; margin-bottom: 10px;">Existing Products Matrix</h4>
-                <div id="productListContainer"></div>
+                <div id="productListContainer"><div class="prod-item">
+                    <div class="prod-item-info">
+                        <div class="prod-item-code">test 1</div>
+                        <div class="prod-item-title">Testing one</div>
+                    </div>
+                    <div class="item-actions">
+                        <button onclick="editProduct('test 1')">Edit</button>
+                        <button class="del-btn" onclick="deleteProduct('test 1')">Delete</button>
+                    </div>
+                </div></div>
             </div>
 
             <div class="modal-actions">
                 <button class="modal-close" onclick="closeProductEditor()">Cancel</button>
-                <button class="modal-save" id="publishProdBtn" onclick="saveProductsToGitHub()">Save & Publish to GitHub</button>
+                <button class="modal-save" id="publishProdBtn" onclick="saveProductsToGitHub()">Save &amp; Publish to GitHub</button>
             </div>
         </div>
     </div>
@@ -570,5 +578,6 @@
             }
         }
     </script>
-</body>
-</html>
+
+
+</body></html>
