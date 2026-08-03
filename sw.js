@@ -1,4 +1,4 @@
-const CACHE_NAME = 'centrum-v4';
+const CACHE_NAME = 'centrum-v5';
 const ASSETS = [
   './', 
   './index.html', 
