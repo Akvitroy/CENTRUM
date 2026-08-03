@@ -8,5 +8,10 @@
     "title": "Product Code: akv ch",
     "subtitle": "Nature Theme Collection — Akvi Troy Cloudline Short",
     "html": "<p><strong>Fit Type:</strong> Tight Fit</p><p><strong>Category:</strong> Sports & Streetwear</p>"
+  },
+  "test 1": {
+    "title": "Testing one",
+    "subtitle": "Test 1",
+    "html": ""
   }
 }
