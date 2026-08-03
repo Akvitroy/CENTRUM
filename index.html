@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C E N T R U M - Database</title>
@@ -339,7 +338,7 @@
         }
     </style>
 </head>
-<body>
+<body class="product-mode">
 
     <header id="headerPanel">
         <div class="logo editable">C E N T R U M</div>
@@ -359,13 +358,17 @@
 
         <div id="errorLog" class="error-message"></div>
 
-        <div id="productView">
+        <div id="productView" style="display: block;">
             <div class="back-nav">
                 <button onclick="returnToHome()">← BACK TO C E N T R U M</button>
             </div>
-            <h1 id="viewTitle" class="editable">Product Code:</h1>
-            <div id="viewSubtitle" class="product-subtitle editable"></div>
-            <div id="viewContent" class="product-details editable"></div>
+            <h1 id="viewTitle" class="editable">Product Code: akv xz</h1>
+            <div id="viewSubtitle" class="product-subtitle editable">Nature Theme Collection — Akvi Troy Cloudline Short</div>
+            <div id="viewContent" class="product-details editable"><div style="margin-bottom: 25px;">
+                           <img src="https://akvitroy.com/images/p101.jpg" alt="P101 Garment View" style="max-width: 100%; height: auto; border-radius: 4px;">
+                       </div>
+                       <p><strong>Fit Type:</strong> Tight Fit</p>
+                       <p><strong>Category:</strong> Sports &amp; Streetwear</p><p>Categories&nbsp;</p></div>
         </div>
     </main>
 
@@ -374,25 +377,25 @@
         <div id="admin-bar">
           <span id="admin-status">🔒 CENTRUM Admin</span>
           <div>
-            <button id="login-btn" onclick="login()">Admin Login</button>
+            <button id="login-btn" onclick="login()" style="display: inline-block;">Admin Login</button>
             <button id="prod-btn" class="product-btn" onclick="openProductEditor()" style="display: none;">Edit Products</button>
-            <button id="save-btn" class="save-btn" onclick="saveToGitHub()" style="display: none;">Publish Page</button>
+            <button id="save-btn" class="save-btn" onclick="saveToGitHub()" style="display: none;" disabled="">Publishing...</button>
             <button id="logout-btn" class="logout-btn" onclick="logout()" style="display: none;">Logout</button>
           </div>
         </div>
 
         <hr class="footer-line">
-        <div class="footer-text editable">&copy; Akvitroy, 2026. All Rights Reserved.</div>
+        <div class="footer-text editable">© Akvitroy, 2026. All Rights Reserved.</div>
     </footer>
 
     <!-- PRODUCT EDITOR MODAL -->
-    <div id="productModal">
+    <div id="productModal" style="display: none;">
         <h3>CENTRUM — Product Database Editor</h3>
         <p style="font-size: 12px; color: #aaa; margin-top: 5px;">Edit product entries in JSON format below:</p>
         <textarea id="jsonInput"></textarea>
         <div class="modal-actions">
             <button class="modal-close" onclick="closeProductEditor()">Cancel</button>
-            <button class="modal-save" onclick="saveProductsToGitHub()">Save & Publish Products</button>
+            <button class="modal-save" onclick="saveProductsToGitHub()">Save &amp; Publish Products</button>
         </div>
     </div>
 
@@ -631,5 +634,6 @@
             }
         }
     </script>
-</body>
-</html>
+
+
+</body></html>
